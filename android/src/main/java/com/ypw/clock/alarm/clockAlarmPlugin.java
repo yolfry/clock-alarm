@@ -52,7 +52,7 @@ public class clockAlarmPlugin extends Plugin {
     }
 
 
-    //Agregar Alarma
+    @PluginMethod
     public void setAlarm(PluginCall call) {
 
         Integer sec = call.getInt("sec");
@@ -60,7 +60,7 @@ public class clockAlarmPlugin extends Plugin {
 
         Intent intent = new Intent(getContext(), AlarmReceiver.class);
         intent.putExtra("message", message);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
         
 
         AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
