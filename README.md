@@ -14,6 +14,8 @@ npx cap sync
 <docgen-index>
 
 * [`echo(...)`](#echo)
+* [`setAlarm(...)`](#setalarm)
+* [Type Aliases](#type-aliases)
 
 </docgen-index>
 
@@ -33,5 +35,28 @@ echo(options: { value: string; }) => Promise<{ value: string; }>
 **Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
 
 --------------------
+
+
+### setAlarm(...)
+
+```typescript
+setAlarm(options: { sec: number; sound: boolean; title: string; text: string; }) => Promise<AlarmSetResult>
+```
+
+| Param         | Type                                                                       |
+| ------------- | -------------------------------------------------------------------------- |
+| **`options`** | <code>{ sec: number; sound: boolean; title: string; text: string; }</code> |
+
+**Returns:** <code>Promise&lt;<a href="#alarmsetresult">AlarmSetResult</a>&gt;</code>
+
+--------------------
+
+
+### Type Aliases
+
+
+#### AlarmSetResult
+
+<code>{ // return input value as it is sec: number; // return result result: boolean; }</code>
 
 </docgen-api>
