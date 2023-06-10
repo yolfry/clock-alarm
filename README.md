@@ -39,9 +39,9 @@ public class MainActivity extends BridgeActivity {
 
 <docgen-index>
 
-- [`echo(...)`](#echo)
-- [`setAlarm(...)`](#setalarm)
-- [Interfaces](#interfaces)
+* [`echo(...)`](#echo)
+* [`setAlarm(...)`](#setalarm)
+* [Interfaces](#interfaces)
 
 </docgen-index>
 
@@ -60,7 +60,8 @@ echo(options: { value: string; }) => Promise<{ value: string; }>
 
 **Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
 
----
+--------------------
+
 
 ### setAlarm(...)
 
@@ -74,9 +75,11 @@ setAlarm(options: { sec: number; message: string; }) => Promise<alarmResult>
 
 **Returns:** <code>Promise&lt;<a href="#alarmresult">alarmResult</a>&gt;</code>
 
----
+--------------------
+
 
 ### Interfaces
+
 
 #### alarmResult
 

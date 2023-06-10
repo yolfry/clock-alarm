@@ -17,7 +17,11 @@ public class AlarmReceiver extends BroadcastReceiver {
     /**
      * Restore and present notification
      */
-    public void onReceive(Context context, Intent intent, String message) {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+
+        String message = intent.getStringExtra("message");
+
          // Mostrar mensaje de alarma
          Toast.makeText(context, message, Toast.LENGTH_LONG).show();
         
@@ -29,3 +33,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 
 }
+
+
+

@@ -1,6 +1,6 @@
 {
   "name": "capacitor-clock-alarm",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "This capacitor add-on allows you to create an alarm clock for iOS and Android",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
