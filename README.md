@@ -9,13 +9,42 @@ npm install clock-alarm
 npx cap sync
 ```
 
+## Add code (iOS)
+
+The code is automatically added with npx cap sync.
+
+## Add code (Android)
+
+Add the following to `MainActivity.java`
+(Receiver is in MainActivity for the convenience of the plugin)
+
+```
+// import
+import com.ypw.clock.alarm.clockAlarmPlugin;
+
+// register plugin
+public class MainActivity extends BridgeActivity {
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    ...
+    ...
+    // Initializes the Bridge
+    this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
+      // Additional plugins you've installed go here
+      // Ex: add(TotallyAwesomePlugin.class);
+       add(clockAlarmPlugin.class);
+    }});
+  }
+}
+```
+
 ## API
 
 <docgen-index>
 
-* [`echo(...)`](#echo)
-* [`setAlarm(...)`](#setalarm)
-* [Type Aliases](#type-aliases)
+- [`echo(...)`](#echo)
+- [`setAlarm(...)`](#setalarm)
+- [Type Aliases](#type-aliases)
 
 </docgen-index>
 
@@ -34,8 +63,7 @@ echo(options: { value: string; }) => Promise<{ value: string; }>
 
 **Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
 
---------------------
-
+---
 
 ### setAlarm(...)
 
@@ -49,11 +77,9 @@ setAlarm(options: { sec: number; sound: boolean; title: string; text: string; })
 
 **Returns:** <code>Promise&lt;<a href="#alarmsetresult">AlarmSetResult</a>&gt;</code>
 
---------------------
-
+---
 
 ### Type Aliases
-
 
 #### AlarmSetResult
 
