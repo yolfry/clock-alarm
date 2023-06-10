@@ -1,6 +1,6 @@
 import { WebPlugin } from '@capacitor/core';
 
-import type { AlarmSetResult, clockAlarmPlugin } from './definitions';
+import type { alarmResult, clockAlarmPlugin } from './definitions';
 
 export class clockAlarmWeb extends WebPlugin implements clockAlarmPlugin {
 
@@ -9,20 +9,16 @@ export class clockAlarmWeb extends WebPlugin implements clockAlarmPlugin {
     return options;
   }
 
-
   // 5 min alarm : set(5 * 60)
   // clear alarm : set(0)
   async setAlarm(options: {
     sec: number;
-    sound: boolean;
-    title: string;
-    text: string;
-  }): Promise<AlarmSetResult> {
+    message: string;
+  }): Promise<alarmResult> {
 
     console.log("setAlarm options: ", options);
 
     return Promise.resolve({
-      sec: options.sec,
       result: true,
     });
 

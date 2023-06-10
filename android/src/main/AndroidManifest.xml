@@ -6,6 +6,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application>
-      <receiver android:name="com.ypw.clock.alarm.TimedNotificationPublisher" />
+      <receiver android:name="com.ypw.clock.alarm.AlarmReceiver" />
     </application>
   </manifest>

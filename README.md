@@ -29,13 +29,10 @@ public class MainActivity extends BridgeActivity {
     ...
     ...
     // Initializes the Bridge
-    this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
-      // Additional plugins you've installed go here
-      // Ex: add(TotallyAwesomePlugin.class);
-       add(clockAlarmPlugin.class);
-    }});
+    this.registerPlugin(clockAlarmPlugin.class);
   }
 }
+
 ```
 
 ## API
@@ -44,7 +41,7 @@ public class MainActivity extends BridgeActivity {
 
 - [`echo(...)`](#echo)
 - [`setAlarm(...)`](#setalarm)
-- [Type Aliases](#type-aliases)
+- [Interfaces](#interfaces)
 
 </docgen-index>
 
@@ -68,21 +65,23 @@ echo(options: { value: string; }) => Promise<{ value: string; }>
 ### setAlarm(...)
 
 ```typescript
-setAlarm(options: { sec: number; sound: boolean; title: string; text: string; }) => Promise<AlarmSetResult>
+setAlarm(options: { sec: number; message: string; }) => Promise<alarmResult>
 ```
 
-| Param         | Type                                                                       |
-| ------------- | -------------------------------------------------------------------------- |
-| **`options`** | <code>{ sec: number; sound: boolean; title: string; text: string; }</code> |
+| Param         | Type                                           |
+| ------------- | ---------------------------------------------- |
+| **`options`** | <code>{ sec: number; message: string; }</code> |
 
-**Returns:** <code>Promise&lt;<a href="#alarmsetresult">AlarmSetResult</a>&gt;</code>
+**Returns:** <code>Promise&lt;<a href="#alarmresult">alarmResult</a>&gt;</code>
 
 ---
 
-### Type Aliases
+### Interfaces
 
-#### AlarmSetResult
+#### alarmResult
 
-<code>{ // return input value as it is sec: number; // return result result: boolean; }</code>
+| Prop         | Type                 |
+| ------------ | -------------------- |
+| **`result`** | <code>boolean</code> |
 
 </docgen-api>
