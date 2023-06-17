@@ -12,8 +12,12 @@ export class clockAlarmWeb extends WebPlugin implements clockAlarmPlugin {
   // 5 min alarm : set(5 * 60)
   // clear alarm : set(0)
   async setAlarm(options: {
-    sec: number;
+    id: number;
+    at?: string;
     message: string;
+    every?: 'year' | 'month' | 'two-weeks' | 'week' | 'day' | 'hour' | 'minute' | 'second';
+    count?: number;
+    repeats?: boolean;
   }): Promise<alarmResult> {
 
     console.log("setAlarm options: ", options);

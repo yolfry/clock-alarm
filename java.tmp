@@ -1,0 +1,54 @@
+ @PluginMethod
+    public void setAlarm_tmp(PluginCall call) {
+
+
+        //No repetir
+        String  at = call.getString("at");  // Date to Javascript   format fecha espeifica  "20/03/2023"
+        String message = call.getString("message");
+
+
+        //Repetir
+        Boolean repeats = call.getBoolean("repeats");
+        String every = call.getString("every");   /*'year' | 'month' | 'two-weeks' | 'week' | 'day' | 'hour' | 'minute' | 'second'*/
+        Integer count = call.getInt("count");  // "Cont" contiene la cantidad de repetir cada x envery
+
+
+        Intent alarmServiceIntent = new Intent(getContext(), AlarmReceiver.class);
+        alarmServiceIntent.putExtra("message",message);
+        PendingIntent alarmServicePendingIntent = PendingIntent.getBroadcast(getContext(), 0, alarmServiceIntent, PendingIntent.FLAG_IMMUTABLE);
+
+        if(repeats){
+            AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+            long futureTimeInMillis = SystemClock.elapsedRealtime() + 1000 * 1;
+            alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureTimeInMillis, alarmServicePendingIntent);
+        }else{
+            AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+            long futureTimeInMillis = SystemClock.elapsedRealtime() + 1000 * 1;
+            alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureTimeInMillis, alarmServicePendingIntent);
+        }
+
+
+
+        Intent batteryOptimizationIntent = new Intent();
+
+        batteryOptimizationIntent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+
+        batteryOptimizationIntent.setData(Uri.parse("package:" + getContext().getPackageName()));
+        getContext().startActivity(batteryOptimizationIntent);
+
+
+        /*Intent serviceIntent = new Intent(getContext(), AlarmReceiver.class);
+        serviceIntent.putExtra("message", message);
+        serviceIntent.putExtra("sec", sec);
+
+        getContext().startService(serviceIntent);
+       /* if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            getContext().startForegroundService(serviceIntent);
+        } else {
+            getContext().startService(serviceIntent);
+        }*/
+
+        JSObject ret = new JSObject();
+        ret.put("result", true);
+        call.resolve(ret);
+    }

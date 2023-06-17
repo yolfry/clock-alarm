@@ -1,11 +1,30 @@
   <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.ypw.clock.alarm">
 
-   <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+      <uses-permission android:name="android.permission.VIBRATE"/>
+      <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+      <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+      <uses-permission android:name="android.permission.WAKE_LOCK" />
+      <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+      <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+      <uses-permission android:name="android.permission.READ_CALENDAR" />
+      <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+      <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
+      <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
 
     <application>
-      <receiver android:name="com.ypw.clock.alarm.AlarmReceiver" />
+       <receiver
+            android:name="com.ypw.clock.alarm.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!--<service android:name="com.ypw.clock.alarm.AlarmService" android:exported="false"/>
+        <service android:name="com.ypw.clock.alarm.addAlarmService" android:exported="false"/>-->
     </application>
   </manifest>

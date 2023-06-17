@@ -15,25 +15,7 @@ The code is automatically added with npx cap sync.
 
 ## Add code (Android)
 
-Add the following to `MainActivity.java`
-(Receiver is in MainActivity for the convenience of the plugin)
-
-```
-// import
-import com.ypw.clock.alarm.clockAlarmPlugin;
-
-// register plugin
-public class MainActivity extends BridgeActivity {
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    ...
-    ...
-    // Initializes the Bridge
-    this.registerPlugin(clockAlarmPlugin.class);
-  }
-}
-
-```
+The code is automatically added with npx cap sync.
 
 ## API
 
@@ -66,12 +48,12 @@ echo(options: { value: string; }) => Promise<{ value: string; }>
 ### setAlarm(...)
 
 ```typescript
-setAlarm(options: { sec: number; message: string; }) => Promise<alarmResult>
+setAlarm(options: { at?: string; message: string; every?: 'year' | 'month' | 'two-weeks' | 'week' | 'day' | 'hour' | 'minute' | 'second'; count?: number; repeats?: boolean; }) => Promise<alarmResult>
 ```
 
-| Param         | Type                                           |
-| ------------- | ---------------------------------------------- |
-| **`options`** | <code>{ sec: number; message: string; }</code> |
+| Param         | Type                                                                                                                                                                             |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`options`** | <code>{ at?: string; message: string; every?: 'year' \| 'month' \| 'two-weeks' \| 'week' \| 'day' \| 'hour' \| 'minute' \| 'second'; count?: number; repeats?: boolean; }</code> |
 
 **Returns:** <code>Promise&lt;<a href="#alarmresult">alarmResult</a>&gt;</code>
 
