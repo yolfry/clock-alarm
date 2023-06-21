@@ -23,6 +23,7 @@ The code is automatically added with npx cap sync.
 
 * [`echo(...)`](#echo)
 * [`setAlarm(...)`](#setalarm)
+* [`removeAlarm(...)`](#removealarm)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -48,14 +49,29 @@ echo(options: { value: string; }) => Promise<{ value: string; }>
 ### setAlarm(...)
 
 ```typescript
-setAlarm(options: { at?: string; message: string; every?: 'year' | 'month' | 'two-weeks' | 'week' | 'day' | 'hour' | 'minute' | 'second'; count?: number; repeats?: boolean; }) => Promise<alarmResult>
+setAlarm(options: { id: number; at?: string; message: string; every?: 'year' | 'month' | 'two-weeks' | 'week' | 'day' | 'hour' | 'minute' | 'second'; count?: number; repeats?: boolean; }) => Promise<alarmResult>
 ```
 
-| Param         | Type                                                                                                                                                                             |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`options`** | <code>{ at?: string; message: string; every?: 'year' \| 'month' \| 'two-weeks' \| 'week' \| 'day' \| 'hour' \| 'minute' \| 'second'; count?: number; repeats?: boolean; }</code> |
+| Param         | Type                                                                                                                                                                                         |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`options`** | <code>{ id: number; at?: string; message: string; every?: 'year' \| 'month' \| 'two-weeks' \| 'week' \| 'day' \| 'hour' \| 'minute' \| 'second'; count?: number; repeats?: boolean; }</code> |
 
 **Returns:** <code>Promise&lt;<a href="#alarmresult">alarmResult</a>&gt;</code>
+
+--------------------
+
+
+### removeAlarm(...)
+
+```typescript
+removeAlarm(options: { id: number; }) => Promise<{ result: boolean; }>
+```
+
+| Param         | Type                         |
+| ------------- | ---------------------------- |
+| **`options`** | <code>{ id: number; }</code> |
+
+**Returns:** <code>Promise&lt;{ result: boolean; }&gt;</code>
 
 --------------------
 

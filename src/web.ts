@@ -9,8 +9,7 @@ export class clockAlarmWeb extends WebPlugin implements clockAlarmPlugin {
     return options;
   }
 
-  // 5 min alarm : set(5 * 60)
-  // clear alarm : set(0)
+  // Set Alarm
   async setAlarm(options: {
     id: number;
     at?: string;
@@ -27,6 +26,21 @@ export class clockAlarmWeb extends WebPlugin implements clockAlarmPlugin {
     });
 
   }
+
+
+  // Remove Alarm
+  async removeAlarm(options: {
+    id: number;
+  }): Promise<{
+    result: boolean;
+  }> {
+    console.log("setAlarm options: ", options);
+    return Promise.resolve({
+      result: true,
+    });
+
+  }
+
 
 
 }

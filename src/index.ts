@@ -8,3 +8,4 @@ const clockAlarm = registerPlugin<clockAlarmPlugin>('clockAlarm', {
 
 export * from './definitions';
 export { clockAlarm };
+
