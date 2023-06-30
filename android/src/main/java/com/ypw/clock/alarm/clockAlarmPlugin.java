@@ -39,15 +39,30 @@ public class clockAlarmPlugin extends Plugin {
         * every
         * count
         * repeats
+        * Weekday
+        * hour
+        * minute
         * */
 
+        //Id Obligatorio
         Integer id = call.getInt("id", 1);
         String message = call.getString("message", "Alarm Clock");
-        String at = call.getString("at", "");
+
+
+        //Alarma espesifica
+        String at = call.getString("at", null);
+
+        //Alarma Repetir
         Boolean repeats = call.getBoolean("repeats", false);
+
+        //Cada Xtiempo
         String every = call.getString("every", "");
         Integer count = call.getInt("count", 1);
 
+        //WeekDay  1 dia de la semana
+        Integer Weekday = call.getInt("Weekday", null);
+        Integer hour = call.getInt("hour", 9);
+        Integer minute = call.getInt("minute", 20);
 
         try {
 
@@ -57,49 +72,96 @@ public class clockAlarmPlugin extends Plugin {
             alarmServiceIntent.putExtra("id", id);
             PendingIntent alarmServicePendingIntent = PendingIntent.getBroadcast(getContext(), id, alarmServiceIntent, PendingIntent.FLAG_IMMUTABLE);
 
-            Log.i("Input Data id", id.toString());
-            Log.i("Input Data message", message);
-            Log.i("Input Data at", at);
-            Log.i("Input Data repeats", repeats.toString());
-            Log.i("Input Data every", every);
-            Log.i("Input Data count", count.toString());
 
-            //Ejecutar si solo es fecha espesifica sin repetir
-            if (at != null && !at.isEmpty() && at.trim().length() != 0 && repeats==false) {
+            //Alarma que se repiten
+            if(!repeats){
 
-                //JavaScript toString() //Format
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                //Ejecutar si solo es fecha espesifica sin repetir
+                if (at != null) {
+                    //JavaScript toString() //Format
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+                    Date date = dateFormat.parse(at);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
 
-                Date date = dateFormat.parse(at);
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(date);
-
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmServicePendingIntent);
-                } else {
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmServicePendingIntent);
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmServicePendingIntent);
+                    } else {
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmServicePendingIntent);
+                    }
+                }else{
+                    //Ejecutar ahora Now
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,0, alarmServicePendingIntent);
                 }
 
+            }else{ //Repetir
 
-            } else if (repeats && every!=null) {
 
-                long intervalMillis = getIntervalMillis(every, count);
-                //Ejecutar Cada x Tiempo
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), intervalMillis, alarmServicePendingIntent);
+                //Repetir un dia de la Semana
+                if(Weekday!=null){
 
-            } else {
-                // No se especificó una fecha y no se debe repetir la alarma, establecer la alarma en el tiempo actual
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), alarmServicePendingIntent);
-                } else {
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), alarmServicePendingIntent);
+                    Calendar calendar = Calendar.getInstance();
+
+                    // Establecer la hora y los minutos en el objeto Calendar
+                    calendar.setTimeInMillis(System.currentTimeMillis());
+                    calendar.set(Calendar.HOUR_OF_DAY, hour);
+                    calendar.set(Calendar.MINUTE, minute);
+                    calendar.set(Calendar.SECOND, 0);
+
+
+                    switch (Weekday){
+                        case 1:
+                            calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                            break;
+                        case 2:
+                            calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                            break;
+
+                        case 3:
+                            calendar.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
+                            break;
+
+                        case 4:
+                            calendar.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+                            break;
+
+                        case 5:
+                            calendar.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+                            break;
+
+                        case 6:
+                            calendar.set(Calendar.DAY_OF_WEEK, Calendar.FEBRUARY);
+                            break;
+
+                        case 7:
+                            calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+                            break;
+                    }
+
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, alarmServicePendingIntent);
+
                 }
+
+                //Repetir Cada X tiempo
+                if (every!=null && Weekday==null) {
+                    long intervalMillis = getIntervalMillis(every, count);
+                    //Ejecutar Cada x Tiempo
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), intervalMillis, alarmServicePendingIntent);
+                }
+
+                //No se define parametro de repetir, ejecutar alarma ahora
+                if(every==null && Weekday==null){
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,0, alarmServicePendingIntent);
+                }
+
             }
+
 
             call.resolve();
 
         } catch (Exception e) {
             Log.e("Error Alarm ", e.getMessage());
+            call.reject(e.getMessage());
         }
 
     }
